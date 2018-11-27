@@ -1,0 +1,63 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /var/www/html
+  - source: /configs/www.conf
+    destination: /etc/php-fpm.d
+  - source: /configs/nginx.conf
+    destination: /etc/nginx
+  - source: /configs/site.conf
+    destination: /etc/conf.d
+  - source: /configs/zend.conf
+    destination: /etc/nginx
+  - source: /configs/restrictions.conf
+    destination: /etc/nginx
+
+
+permissions:
+  - object: /etc/php-fpm.d
+    pattern: "www.conf"
+    owner: root
+    group: root
+    mode: 644
+    type:
+      - file
+  - object: /etc/nginx
+    pattern: "nginx.conf"
+    owner: root
+    group: root
+    mode: 644
+    type:
+      - file
+  - object: /etc/nginx/conf.d
+    pattern: "site.conf"
+    owner: root
+    group: root
+    mode: 644
+    type:
+      - file
+  - object: /etc/nginx/
+    pattern: "*.conf"
+    owner: root
+    group: root
+    mode: 644
+    type:
+      - file
+
+hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 300
+      runas: root
+    - location: scripts/remove_old_files.sh
+      timeout: 300
+      runas: root
+    - location: scripts/webserver-stop.sh
+    
+  AfterInstall:
+    - location: scripts/change_permissions.sh
+      timeout: 300
+      runas: root
+    - location: scripts/webserver-start.sh

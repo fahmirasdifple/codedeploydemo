@@ -39,7 +39,14 @@ permissions:
     type:
       - file
   - object: /etc/nginx/
-    pattern: "*.conf"
+    pattern: "zend.conf"
+    owner: root
+    group: root
+    mode: 644
+    type:
+      - file
+  - object: /etc/nginx/
+    pattern: "restrictions.conf"
     owner: root
     group: root
     mode: 644

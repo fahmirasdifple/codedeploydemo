@@ -9,7 +9,7 @@ files:
   - source: /configs/nginx.conf
     destination: /etc/nginx
   - source: /configs/site.conf
-    destination: /etc/conf.d
+    destination: /etc/nginx/conf.d
   - source: /configs/zend.conf
     destination: /etc/nginx
   - source: /configs/restrictions.conf
